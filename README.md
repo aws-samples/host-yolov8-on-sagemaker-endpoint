@@ -40,5 +40,5 @@ $ cdk deploy
     2. `2_TestEndpoint.ipynb`: Test the deployed endpoint by running an image and plotting output; Cleanup the endpoint and hosted model
 
 ## Contributors:
-- [Kevin Song (@kcsong)](https://phonetool.amazon.com/users/kcsong)
-- [Romil Shah (@rpshah)](https://phonetool.amazon.com/users/rpshah)
+- [Kevin Song (@kcsong)](kcsong@amazon.com)
+- [Romil Shah (@rpshah)](rpshah@amazon.com)
