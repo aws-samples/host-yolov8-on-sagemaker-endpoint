@@ -2,6 +2,7 @@ __pycache__/
 .vscode/
 .ipynb_checkpoints/
 cdk.out/
+cdk.out/**
 
 .idea
 *.venv
