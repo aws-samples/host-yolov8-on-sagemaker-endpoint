@@ -1,4 +1,4 @@
-# GitHub to SageMaker Notebook 
+# GitHub to SageMaker Notebook
 This Python implementation creates 1 S3 Bucket and 1 SageMaker Notebook
 
 ![AWSArchitecture](../assets/AWSArchitecture.png)
