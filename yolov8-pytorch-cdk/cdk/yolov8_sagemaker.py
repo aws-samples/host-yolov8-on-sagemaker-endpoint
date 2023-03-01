@@ -17,7 +17,6 @@ account = Aws.ACCOUNT_ID
 # 1. Create S3
 # 2. Create SageMaker Notebook and use GitHub as Source
 
-
 class YOLOv8SageMakerStack(Stack):
     """
     The SageMaker Notebook is used to deploy the custom model on a SageMaker endpoint and test it.
