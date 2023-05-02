@@ -30,10 +30,12 @@ def output_fn(prediction_output, content_type):
     print("Executing output_fn from inference.py ...")
     infer = {}
     for result in prediction_output:
-        if result.boxes:
+        if 'boxes' in result.keys:
             infer['boxes'] = result.boxes.numpy().data.tolist()
-        if result.masks:
+        if 'masks' in result.keys:
             infer['masks'] = result.masks.numpy().data.tolist()
-        if result.probs:
+        if 'keypoints' in result.keys:
+            infer['keypoints'] = result.keypoints.numpy().data.tolist()
+        if 'probs' in result.keys:
             infer['probs'] = result.probs.numpy().data.tolist()
     return json.dumps(infer)
