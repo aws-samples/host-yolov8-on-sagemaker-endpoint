@@ -63,7 +63,8 @@ def output_fn(prediction_output, content_type):
         # Extract coordinates (first row)
         coordinates = box.xywhn[0, :]
         # Get label class from object
-        cls = int(box.cls)
+        # this gets added as a Float because the NumPy array can only have one data type
+        cls = box.cls
         # Stitch coordinates and label calls together in one array
         prediction = np.append(coordinates, cls)
         # Append prediction to multi row array
