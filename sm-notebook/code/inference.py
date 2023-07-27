@@ -60,13 +60,13 @@ def output_fn(prediction_output, content_type):
     for result in results_for_first_image:
         # Get box from object and convert from TensorFlow to NumPy array
         box = result.boxes[0].numpy()
-        # Extract coordinates (first row)
-        coordinates = box.xywhn[0, :]
         # Get label class from object
         # this gets added as a Float because the NumPy array can only have one data type
-        cls = box.cls
+        cls = box.cls        
+        # Extract coordinates (first row)
+        coordinates = box.xywhn[0, :]
         # Stitch coordinates and label calls together in one array
-        prediction = np.append(coordinates, cls)
+        prediction = np.append(cls, coordinates)
         # Append prediction to multi row array
         print(prediction)
         predictions = np.vstack((predictions, prediction))    
