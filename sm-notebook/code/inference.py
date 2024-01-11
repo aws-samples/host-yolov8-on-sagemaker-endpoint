@@ -29,7 +29,6 @@ def predict_fn(input_data, model):
 def output_fn(prediction_output, content_type):
     print("Executing output_fn from inference.py ...")
     infer = {}
-    print(prediction_output )
     for result in prediction_output:
         if 'boxes' in result._keys and result.boxes is not None:
             infer['boxes'] = result.boxes.numpy().data.tolist()
