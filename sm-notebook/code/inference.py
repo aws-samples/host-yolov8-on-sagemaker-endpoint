@@ -38,6 +38,7 @@ def output_fn(prediction_output, content_type):
                 infer[path]['boxes_xywh'] = result.boxes.xywh.tolist()
                 infer[path]['boxes_xyxyn'] = result.boxes.xyxyn.tolist()
                 infer[path]['boxes_xywhn'] = result.boxes.xywhn.tolist()
+                infer[path]['confidence'] = result.boxes.conf.tolist()
         if hasattr(result, 'masks'):
             infer[path]['masks'] = {}
             if result.masks:
