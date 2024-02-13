@@ -29,13 +29,30 @@ def predict_fn(input_data, model):
 def output_fn(prediction_output, content_type):
     print("Executing output_fn from inference.py ...")
     infer = {}
+    image_no = 0
     for result in prediction_output:
-        if 'boxes' in result.keys:
-            infer['boxes'] = result.boxes.numpy().data.tolist()
-        if 'masks' in result.keys:
-            infer['masks'] = result.masks.numpy().data.tolist()
-        if 'keypoints' in result.keys:
-            infer['keypoints'] = result.keypoints.numpy().data.tolist()
-        if 'probs' in result.keys:
-            infer['probs'] = result.probs.numpy().data.tolist()
+        path = str(image_no)
+        if hasattr(result,'path'):
+            path = result.path
+        infer[path] = {}
+        if hasattr(result, 'boxes'):
+            if result.boxes:
+                infer[path]['boxes_xyxy'] = result.boxes.xyxy.tolist()
+                infer[path]['boxes_xywh'] = result.boxes.xywh.tolist()
+                infer[path]['boxes_xyxyn'] = result.boxes.xyxyn.tolist()
+                infer[path]['boxes_xywhn'] = result.boxes.xywhn.tolist()
+                infer[path]['confidence'] = result.boxes.conf.tolist()
+        if hasattr(result, 'masks'):
+            infer[path]['masks'] = {}
+            if result.masks:
+                infer[path]['masks'] = result.masks.tolist()
+        if hasattr(result, 'keypoints'):
+            infer[path]['keypoints'] = {}
+            if result.keypoints:
+                infer[path]['keypoints'] = result.keypoints.tolist()
+        if hasattr(result, 'probs'):
+            infer[path]['probs'] = {}
+            if result.probs:
+                infer[path]['probs'] = result.probs.tolist()
+        image_no += 1
     return json.dumps(infer)
