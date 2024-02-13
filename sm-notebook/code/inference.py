@@ -29,8 +29,11 @@ def predict_fn(input_data, model):
 def output_fn(prediction_output, content_type):
     print("Executing output_fn from inference.py ...")
     infer = {}
+    image_no = 0
     for result in prediction_output:
-        path = result.path
+        path = str(image_no)
+        if hasattr(result,'path'):
+            path = result.path
         infer[path] = {}
         if hasattr(result, 'boxes'):
             if result.boxes:
@@ -51,4 +54,5 @@ def output_fn(prediction_output, content_type):
             infer[path]['probs'] = {}
             if result.probs:
                 infer[path]['probs'] = result.probs.tolist()
+        image_no += 1
     return json.dumps(infer)
