@@ -30,12 +30,24 @@ def output_fn(prediction_output, content_type):
     print("Executing output_fn from inference.py ...")
     infer = {}
     for result in prediction_output:
-        if 'boxes' in result.keys:
-            infer['boxes'] = result.boxes.numpy().data.tolist()
-        if 'masks' in result.keys:
-            infer['masks'] = result.masks.numpy().data.tolist()
-        if 'keypoints' in result.keys:
-            infer['keypoints'] = result.keypoints.numpy().data.tolist()
-        if 'probs' in result.keys:
-            infer['probs'] = result.probs.numpy().data.tolist()
+        path = result.path
+        infer[path] = {}
+        if hasattr(result, 'boxes'):
+            if result.boxes:
+                infer[path]['boxes_xyxy'] = result.boxes.xyxy.tolist()
+                infer[path]['boxes_xywh'] = result.boxes.xywh.tolist()
+                infer[path]['boxes_xyxyn'] = result.boxes.xyxyn.tolist()
+                infer[path]['boxes_xywhn'] = result.boxes.xywhn.tolist()
+        if hasattr(result, 'masks'):
+            infer[path]['masks'] = {}
+            if result.masks:
+                infer[path]['masks'] = result.masks.tolist()
+        if hasattr(result, 'keypoints'):
+            infer[path]['keypoints'] = {}
+            if result.keypoints:
+                infer[path]['keypoints'] = result.keypoints.tolist()
+        if hasattr(result, 'probs'):
+            infer[path]['probs'] = {}
+            if result.probs:
+                infer[path]['probs'] = result.probs.tolist()
     return json.dumps(infer)
