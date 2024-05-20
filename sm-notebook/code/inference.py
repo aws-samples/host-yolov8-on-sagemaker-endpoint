@@ -5,7 +5,7 @@ from ultralytics import YOLO
 def model_fn(model_dir):
     print("Executing model_fn from inference.py ...")
     env = os.environ
-    model = YOLO("/opt/ml/model/code/" + env['YOLOV8_MODEL'])
+    model = YOLO(os.path.join(model_dir, env['YOLOV8_MODEL']))
     return model
 
 def input_fn(request_body, request_content_type):
@@ -30,12 +30,12 @@ def output_fn(prediction_output, content_type):
     print("Executing output_fn from inference.py ...")
     infer = {}
     for result in prediction_output:
-        if 'boxes' in result.keys:
+        if 'boxes' in result._keys and result.boxes is not None:
             infer['boxes'] = result.boxes.numpy().data.tolist()
-        if 'masks' in result.keys:
+        if 'masks' in result._keys and result.masks is not None:
             infer['masks'] = result.masks.numpy().data.tolist()
-        if 'keypoints' in result.keys:
+        if 'keypoints' in result._keys and result.keypoints is not None:
             infer['keypoints'] = result.keypoints.numpy().data.tolist()
-        if 'probs' in result.keys:
+        if 'probs' in result._keys and result.probs is not None:
             infer['probs'] = result.probs.numpy().data.tolist()
     return json.dumps(infer)
