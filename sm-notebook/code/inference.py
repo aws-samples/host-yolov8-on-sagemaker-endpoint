@@ -1,5 +1,5 @@
 import numpy as np
-import torch, os, json, io, cv2, time
+import torch, os, json, base64, cv2, time
 from ultralytics import YOLO
 
 def model_fn(model_dir):
@@ -11,7 +11,7 @@ def model_fn(model_dir):
 def input_fn(request_body, request_content_type):
     print("Executing input_fn from inference.py ...")
     if request_content_type:
-        jpg_original = np.load(io.BytesIO(request_body), allow_pickle=True)
+        jpg_original = base64.b64decode(request_body)
         jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
         img = cv2.imdecode(jpg_as_np, flags=-1)
     else:
