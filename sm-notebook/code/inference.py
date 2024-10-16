@@ -31,11 +31,11 @@ def output_fn(prediction_output, content_type):
     infer = {}
     for result in prediction_output:
         if 'boxes' in result._keys and result.boxes is not None:
-            infer['boxes'] = result.boxes.numpy().data.tolist()
+            infer['boxes'] = result.boxes.cpu().numpy().data.tolist()
         if 'masks' in result._keys and result.masks is not None:
-            infer['masks'] = result.masks.numpy().data.tolist()
+            infer['masks'] = result.masks.cpu().numpy().data.tolist()
         if 'keypoints' in result._keys and result.keypoints is not None:
-            infer['keypoints'] = result.keypoints.numpy().data.tolist()
+            infer['keypoints'] = result.keypoints.cpu().numpy().data.tolist()
         if 'probs' in result._keys and result.probs is not None:
-            infer['probs'] = result.probs.numpy().data.tolist()
+            infer['probs'] = result.probs.cpu().numpy().data.tolist()
     return json.dumps(infer)
