@@ -48,6 +48,7 @@ class YOLOv8SageMakerStack(Stack):
                 iam.PolicyStatement(actions=['s3:ListAllMyBuckets'], resources=['arn:aws:s3:::*']),
                 iam.PolicyStatement(actions=['iam:PassRole', 'ecr:*', "logs:*"], resources=['*', '*', '*']),
                 iam.PolicyStatement(actions=['s3:*'], resources=[self.bucket.bucket_arn, self.bucket.bucket_arn+'/*']),
+                iam.PolicyStatement(actions=['cloudwatch:PutMetricData'], resources=['*']),
                 ]).attach_to_role(nRole)
 
         ## Create SageMaker Notebook instances cluster
